@@ -1,0 +1,21 @@
+{
+    "name": "sunxiaozhi/librarys",
+    "description": "Personal library",
+    "type": "library",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "sunxiaozhi",
+            "email": "1129535445@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "sunxiaozhi\\librarys\\": "src/"
+        }
+    }
+}
