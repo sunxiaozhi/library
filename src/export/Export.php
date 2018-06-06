@@ -7,7 +7,7 @@
  * Time: 11:30
  */
 
-namespace sunxiaozhi\librarys\export;
+namespace sunxiaozhi\library\export;
 
 class Export
 {

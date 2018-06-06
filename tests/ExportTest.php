@@ -9,6 +9,6 @@
 
 require_once "../vendor/autoload.php";
 
-use sunxiaozhi\librarys\export\Export;
+use sunxiaozhi\library\export\Export;
 
 Export::desc();
