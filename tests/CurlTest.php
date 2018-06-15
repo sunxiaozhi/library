@@ -9,7 +9,7 @@
 
 require_once "../vendor/autoload.php";
 
-use sunxiaozhi\librarys\curl\Curl;
+use sunxiaozhi\library\curl\Curl;
 
 $url = 'www.baidu.com';
 $curl = new Curl();

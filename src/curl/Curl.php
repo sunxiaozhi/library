@@ -7,7 +7,7 @@
  * Time: 15:48
  */
 
-namespace sunxiaozhi\librarys\curl;
+namespace sunxiaozhi\library\curl;
 
 class Curl
 {
