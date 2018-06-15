@@ -11,15 +11,24 @@ namespace sunxiaozhi\library\export;
 
 class Export
 {
+    /*
+     * 类描述
+     * */
     static public function desc()
     {
         echo "this is export";
     }
 
+    /*
+     * print_r()
+     * */
     public function p() {
 
     }
 
+    /*
+     * var_dump()
+     * */
     public function v() {
 
     }
