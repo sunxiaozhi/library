@@ -1,10 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * curl请求
- * User: sunhuanzhi
- * Date: 2018/6/4
- * Time: 15:48
+ * Curl请求
+ * User: sunxiaozhi
+ * Date: 2018/6/4 15:48
  */
 
 namespace sunxiaozhi\library\curl;
@@ -21,7 +19,7 @@ class Curl
      * @param string $password //密码
      * @return array|bool|mixed
      */
-    public function execute($method, $url, $fields = '', $userAgent = '', $httpHeaders = '', $username = '', $password = '')
+    private function execute($method, $url, $fields = '', $userAgent = '', $httpHeaders = '', $username = '', $password = '')
     {
         //创建curl资源
         $curl_resource = $this->create();
@@ -153,7 +151,7 @@ class Curl
      * curl支持 检测
      * @return bool|null|resource
      */
-    public function create()
+    private function create()
     {
         $curl_resource = null;
 
