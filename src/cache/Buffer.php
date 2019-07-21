@@ -15,17 +15,19 @@ use sunxiaozhi\library\exception\InvalidArgumentException;
 
 class Buffer
 {
-    protected $buffer;
-
+    /**
+     * @var string
+     */
     protected $defaultBuffer;
-
-    protected $defaultCache;
 
     /**
      * @var \sunxiaozhi\library\cache\cache $cache
      */
     protected $cache;
 
+    /**
+     * @var \sunxiaozhi\library\cache\config\Config $config
+     */
     protected $config;
 
     public function __construct($cache = null, Config $config = null)
@@ -34,32 +36,36 @@ class Buffer
         $this->config = $config;
 
         if (!empty($config['default'])) {
-            $this->setDefaultCache($config['default']);
+            $this->setDefaultBuffer($config['default']);
         }
     }
 
     /**
-     * Set default cache name.
+     * Set default buffer name.
      *
      * @param string $name
      *
      * @return $this
      */
-    public function setDefaultCache($name)
+    public function setDefaultBuffer($name)
     {
-        $this->defaultCache = $name;
+        $this->defaultBuffer = $name;
 
         return $this;
     }
 
     /**
-     * @param $name
+     * Get buffer
+     *
+     * @param string $name
+     *
      * @return Cache
+     *
      * @throws InvalidArgumentException
      */
     public function getBuffer()
     {
-        $name = $this->defaultCache ?: $this->getDefaultBuffer();
+        $name = $this->defaultBuffer ?: $this->getDefaultBuffer();
 
         return $this->createBuffer($name);
     }
@@ -81,6 +87,8 @@ class Buffer
     }
 
     /**
+     * Create buffer
+     *
      * @param $name
      * @return Cache
      * @throws InvalidArgumentException
@@ -98,6 +106,13 @@ class Buffer
         return $buffer;
     }
 
+    /**
+     * Formate buffer class name
+     *
+     * @param $name
+     *
+     * @return string
+     */
     protected function formatBufferClassName($name)
     {
         /*if (\class_exists($name) && \in_array(Cache::class, \class_implements($name))) {
@@ -110,7 +125,7 @@ class Buffer
     }
 
     /**
-     * Make gateway instance.
+     * Make cache instance.
      *
      * @param string $buffer
      * @param array $config
