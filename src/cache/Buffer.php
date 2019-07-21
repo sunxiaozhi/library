@@ -8,7 +8,7 @@
 namespace sunxiaozhi\library\cache;
 
 use sunxiaozhi\library\cache\config\Config;
-use sunxiaozhi\library\cache\contracts\CacheInterface;
+use sunxiaozhi\library\cache\cache\Cache;
 
 use RuntimeException;
 use sunxiaozhi\library\exception\InvalidArgumentException;
@@ -54,7 +54,7 @@ class Buffer
 
     /**
      * @param $name
-     * @return CacheInterface
+     * @return Cache
      * @throws InvalidArgumentException
      */
     public function getBuffer()
@@ -82,7 +82,7 @@ class Buffer
 
     /**
      * @param $name
-     * @return CacheInterface
+     * @return Cache
      * @throws InvalidArgumentException
      */
     public function createBuffer($name)
@@ -91,8 +91,8 @@ class Buffer
         $buffer = $this->makeBuffer($className, $this->config->get("cache.{$name}", []));
 
 
-        if (!($buffer instanceof CacheInterface)) {
-            throw new InvalidArgumentException(\sprintf('Buffer "%s" must implement interface %s.', $name, CacheInterface::class));
+        if (!($buffer instanceof Cache)) {
+            throw new InvalidArgumentException(\sprintf('Buffer "%s" must implement interface %s.', $name, Cache::class));
         }
 
         return $buffer;
@@ -100,7 +100,7 @@ class Buffer
 
     protected function formatBufferClassName($name)
     {
-        /*if (\class_exists($name) && \in_array(CacheInterface::class, \class_implements($name))) {
+        /*if (\class_exists($name) && \in_array(Cache::class, \class_implements($name))) {
             return $name;
         }*/
 
@@ -115,13 +115,13 @@ class Buffer
      * @param string $buffer
      * @param array $config
      *
-     * @return \sunxiaozhi\library\cache\contracts\CacheInterface
+     * @return \sunxiaozhi\library\cache\cache\Cache
      *
      * @throws \sunxiaozhi\library\exception\InvalidArgumentException
      */
     protected function makeBuffer($buffer, $config)
     {
-        if (!\class_exists($buffer) || !\in_array(CacheInterface::class, \class_implements($buffer))) {
+        if (!\class_exists($buffer) || !\in_array(Cache::class, \class_implements($buffer))) {
             throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid easy-sms gateway.', $buffer));
         }
 
