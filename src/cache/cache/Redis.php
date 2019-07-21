@@ -82,7 +82,7 @@ class Redis extends Cache
         }
 
         try {
-            $result = 0 === strpos($value, 'serialize:') ? unserialize(substr($value, 16)) : $value;
+            $result = 0 === strpos($value, 'redis_serialize:') ? unserialize(substr($value, 16)) : $value;
         } catch (\Exception $e) {
             $result = $default;
         }
@@ -110,7 +110,7 @@ class Redis extends Cache
             $first = true;
         }
         $key = $this->getCacheKey($name);
-        $value = is_scalar($value) ? $value : 'serialize:' . serialize($value);
+        $value = is_scalar($value) ? $value : 'redis_serialize:' . serialize($value);
         if ($expire) {
             $result = $this->handler->setex($key, $expire, $value);
         } else {
