@@ -14,14 +14,14 @@ class Redis extends Cache
     protected $config;
 
     protected $options = [
-        'host'       => '127.0.0.1',
-        'port'       => 6379,
-        'password'   => '',
-        'select'     => 0,
-        'timeout'    => 0,
-        'expire'     => 0,
+        'host' => '127.0.0.1',
+        'port' => 6379,
+        'password' => '',
+        'select' => 0,
+        'timeout' => 0,
+        'expire' => 0,
         'persistent' => false,
-        'prefix'     => '',
+        'prefix' => '',
     ];
 
     protected $handler;
@@ -71,7 +71,7 @@ class Redis extends Cache
      * 读取缓存
      * @access public
      * @param string $name 缓存变量名
-     * @param mixed  $default 默认值
+     * @param mixed $default 默认值
      * @return mixed
      */
     public function get($name, $default = false)
@@ -93,9 +93,9 @@ class Redis extends Cache
     /**
      * 写入缓存
      * @access public
-     * @param string            $name 缓存变量名
-     * @param mixed             $value  存储数据
-     * @param integer|\DateTime $expire  有效时间（秒）
+     * @param string $name 缓存变量名
+     * @param mixed $value 存储数据
+     * @param integer|\DateTime $expire 有效时间（秒）
      * @return boolean
      */
     public function set($name, $value, $expire = null)
@@ -109,7 +109,7 @@ class Redis extends Cache
         if ($this->tag && !$this->has($name)) {
             $first = true;
         }
-        $key   = $this->getCacheKey($name);
+        $key = $this->getCacheKey($name);
         $value = is_scalar($value) ? $value : 'serialize:' . serialize($value);
         if ($expire) {
             $result = $this->handler->setex($key, $expire, $value);
@@ -123,8 +123,8 @@ class Redis extends Cache
     /**
      * 自增缓存（针对数值缓存）
      * @access public
-     * @param  string    $name 缓存变量名
-     * @param  int       $step 步长
+     * @param  string $name 缓存变量名
+     * @param  int $step 步长
      * @return false|int
      */
     public function inc($name, $step = 1)
@@ -137,8 +137,8 @@ class Redis extends Cache
     /**
      * 自减缓存（针对数值缓存）
      * @access public
-     * @param  string    $name 缓存变量名
-     * @param  int       $step 步长
+     * @param  string $name 缓存变量名
+     * @param  int $step 步长
      * @return false|int
      */
     public function dec($name, $step = 1)
