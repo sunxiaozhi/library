@@ -18,7 +18,7 @@ class Buffer
     protected $buffer;
 
     protected $defaultBuffer;
-    
+
     protected $defaultCache;
 
     /**
@@ -100,13 +100,13 @@ class Buffer
 
     protected function formatBufferClassName($name)
     {
-        if (\class_exists($name) && \in_array(CacheInterface::class, \class_implements($name))) {
+        /*if (\class_exists($name) && \in_array(CacheInterface::class, \class_implements($name))) {
             return $name;
-        }
+        }*/
 
         $name = \ucfirst(\str_replace(['-', '_', ''], '', $name));
 
-        return __NAMESPACE__ . "\\cahce\\{$name}";
+        return __NAMESPACE__ . "\\cache\\{$name}";
     }
 
     /**

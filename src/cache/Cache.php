@@ -38,7 +38,7 @@ class Cache
      */
     public function instance()
     {
-        $this->buffer ?: $buffer = new Buffer($this, $this->config);
+        $this->buffer = $this->buffer ? $this->buffer : $buffer = new Buffer($this, $this->config);
 
         return $this->buffer->getBuffer();
     }
