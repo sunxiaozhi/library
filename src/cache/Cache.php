@@ -36,7 +36,7 @@ class Cache
      *
      * @var \sunxiaozhi\library\cache\Buffer Buffer
      *
-     * @return contracts\CacheInterface
+     * @return \sunxiaozhi\library\cache\cache\Cache
      *
      * @throws \sunxiaozhi\library\exception\InvalidArgumentException
      */
