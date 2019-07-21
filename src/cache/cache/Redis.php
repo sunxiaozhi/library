@@ -35,9 +35,11 @@ class Redis extends Cache
         if (!extension_loaded('redis')) {
             throw new \BadFunctionCallException('not support: redis');
         }
+
         if (!empty($options)) {
             $this->options = array_merge($this->options, $options);
         }
+
         $this->handler = new \Redis;
         if ($this->options['persistent']) {
             $this->handler->pconnect($this->options['host'], $this->options['port'], $this->options['timeout'], 'persistent_id_' . $this->options['select']);

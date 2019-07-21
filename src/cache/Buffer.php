@@ -88,7 +88,7 @@ class Buffer
     public function createBuffer($name)
     {
         $className = $this->formatBufferClassName($name);
-        $buffer = $this->makeBuffer($className, $this->config->get("cache.{$name}", []));
+        $buffer = $this->makeBuffer($className, $this->config);
 
 
         if (!($buffer instanceof Cache)) {
@@ -119,7 +119,7 @@ class Buffer
      *
      * @throws \sunxiaozhi\library\exception\InvalidArgumentException
      */
-    protected function makeBuffer($buffer, $config)
+    protected function makeBuffer($buffer, Config $config)
     {
         /*if (!\class_exists($buffer) || !\in_array(Cache::class, \class_implements($buffer))) {
             throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid easy-sms gateway.', $buffer));
