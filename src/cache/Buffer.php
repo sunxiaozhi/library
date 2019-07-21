@@ -121,8 +121,12 @@ class Buffer
      */
     protected function makeBuffer($buffer, $config)
     {
-        if (!\class_exists($buffer) || !\in_array(Cache::class, \class_implements($buffer))) {
+        /*if (!\class_exists($buffer) || !\in_array(Cache::class, \class_implements($buffer))) {
             throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid easy-sms gateway.', $buffer));
+        }*/
+
+        if (!\class_exists($buffer)) {
+            throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid cache.', $buffer));
         }
 
         return new $buffer($config);
