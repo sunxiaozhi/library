@@ -17,11 +17,6 @@ class Cache
     protected $config;
 
     /**
-     * @var string
-     */
-    protected $defaultCache;
-
-    /**
      * @var \sunxiaozhi\library\cache\Buffer $buffer
      */
     protected $buffer;
@@ -34,8 +29,6 @@ class Cache
     public function __construct(array $config)
     {
         $this->config = new Config($config);
-
-
     }
 
     /**
