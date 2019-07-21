@@ -21,6 +21,9 @@ class Cache
      */
     protected $defaultCache;
 
+    /**
+     * @var \sunxiaozhi\library\cache\Buffer $buffer
+     */
     protected $buffer;
 
     /**
@@ -32,32 +35,17 @@ class Cache
     {
         $this->config = new Config($config);
 
-        if (!empty($config['default'])) {
-            $this->setDefaultCache($config['default']);
-        }
-    }
 
-    /**
-     * Set default cache name.
-     *
-     * @param string $name
-     *
-     * @return $this
-     */
-    public function setDefaultCache($name)
-    {
-        $this->defaultCache = $name;
-
-        return $this;
     }
 
     /**
      * @var \sunxiaozhi\library\cache\Buffer Buffer
-     * @return mixed
+     * @return contracts\CacheInterface
+     * @throws \sunxiaozhi\library\exception\InvalidArgumentException
      */
     public function instance()
     {
-        $this->buffer ?: $buffer = new Buffer($this->config);
+        $this->buffer ?: $buffer = new Buffer($this, $this->config);
 
         return $this->buffer->getBuffer();
     }
