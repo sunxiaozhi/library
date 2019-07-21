@@ -10,6 +10,7 @@ namespace sunxiaozhi\library\cache;
 use sunxiaozhi\library\cache\config\Config;
 use RuntimeException;
 use sunxiaozhi\library\exception\InvalidArgumentException;
+use sunxiaozhi\library\cache\cache\Cache as CacheAbstract;
 
 class Cache
 {
@@ -104,7 +105,8 @@ class Cache
      * Create cache
      *
      * @param $name
-     * @return Cache
+     * @return CacheAbstract Cache
+     *
      * @throws InvalidArgumentException
      */
     public function createCache($name)
@@ -112,8 +114,7 @@ class Cache
         $className = $this->formatCacheClassName($name);
         $cache = $this->makeCache($className);
 
-
-        if (!($cache instanceof Cache)) {
+        if (!($cache instanceof CacheAbstract)) {
             throw new InvalidArgumentException(\sprintf('Cache "%s" must implement interface %s.', $name, Cache::class));
         }
 
