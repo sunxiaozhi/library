@@ -1,0 +1,107 @@
+<?php
+/**
+ * 缓存器
+ * User: Administrator
+ * Date: 2019/7/21 10:00
+ */
+
+namespace sunxiaozhi\library\cache;
+
+use sunxiaozhi\library\cache\config\Config;
+use sunxiaozhi\library\cache\contracts\CacheInterface;
+
+use RuntimeException;
+use sunxiaozhi\library\exception\InvalidArgumentException;
+
+class Buffer
+{
+    protected $buffer;
+
+    protected $defaultBuffer;
+
+    protected $cache;
+
+    protected $config;
+
+    public function __construct($cache = null,Config $config = null)
+    {
+        $this->cache = $cache;
+        $this->config = $config;
+    }
+
+    /**
+     * @param $name
+     * @return CacheInterface
+     * @throws InvalidArgumentException
+     */
+    public function getBuffer($name)
+    {
+        $name = $name ?: $this->getDefaultBuffer();
+
+        return $this->createBuffer($name);
+    }
+
+    /**
+     * Get default buffer name.
+     *
+     * @return string
+     *
+     * @throws \RuntimeException if no default gateway configured
+     */
+    public function getDefaultBuffer()
+    {
+        if (empty($this->defaultBuffer)) {
+            throw new RuntimeException('No default buffer configured.');
+        }
+
+        return $this->defaultBuffer;
+    }
+
+    /**
+     * @param $name
+     * @return CacheInterface
+     * @throws InvalidArgumentException
+     */
+    public function createBuffer($name)
+    {
+        $className = $this->formatBufferClassName($name);
+        $buffer = $this->makeBuffer($className, $this->config->get("gateways.{$name}", []));
+
+
+        if (!($buffer instanceof CacheInterface)) {
+            throw new InvalidArgumentException(\sprintf('Buffer "%s" must implement interface %s.', $name, CacheInterface::class));
+        }
+
+        return $buffer;
+    }
+
+    protected function formatBufferClassName($name)
+    {
+        if (\class_exists($name) && \in_array(CacheInterface::class, \class_implements($name))) {
+            return $name;
+        }
+
+        $name = \ucfirst(\str_replace(['-', '_', ''], '', $name));
+
+        return __NAMESPACE__ . "\\Buffers\\{$name}Buffer";
+    }
+
+    /**
+     * Make gateway instance.
+     *
+     * @param string $buffer
+     * @param array $config
+     *
+     * @return \sunxiaozhi\library\cache\contracts\CacheInterface
+     *
+     * @throws \sunxiaozhi\library\exception\InvalidArgumentException
+     */
+    protected function makeBuffer($buffer, $config)
+    {
+        if (!\class_exists($buffer) || !\in_array(CacheInterface::class, \class_implements($buffer))) {
+            throw new InvalidArgumentException(\sprintf('Class "%s" is a invalid easy-sms gateway.', $buffer));
+        }
+
+        return new $buffer($config);
+    }
+}
