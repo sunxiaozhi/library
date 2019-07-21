@@ -1,7 +1,7 @@
 <?php
 /**
  * 缓存类
- * User: Administrator
+ * User: sunxiaozhi
  * Date: 2019/7/21 9:14
  */
 
@@ -32,8 +32,12 @@ class Cache
     }
 
     /**
+     * Cache instance
+     *
      * @var \sunxiaozhi\library\cache\Buffer Buffer
+     *
      * @return contracts\CacheInterface
+     *
      * @throws \sunxiaozhi\library\exception\InvalidArgumentException
      */
     public function instance()
