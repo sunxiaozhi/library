@@ -23,7 +23,7 @@ class Buffer
 
     protected $config;
 
-    public function __construct($cache = null,Config $config = null)
+    public function __construct($cache = null, Config $config = null)
     {
         $this->cache = $cache;
         $this->config = $config;
@@ -65,7 +65,7 @@ class Buffer
     public function createBuffer($name)
     {
         $className = $this->formatBufferClassName($name);
-        $buffer = $this->makeBuffer($className, $this->config->get("gateways.{$name}", []));
+        $buffer = $this->makeBuffer($className, $this->config->get("cache.{$name}", []));
 
 
         if (!($buffer instanceof CacheInterface)) {
@@ -83,7 +83,7 @@ class Buffer
 
         $name = \ucfirst(\str_replace(['-', '_', ''], '', $name));
 
-        return __NAMESPACE__ . "\\Buffers\\{$name}Buffer";
+        return __NAMESPACE__ . "\\cahce\\{$name}";
     }
 
     /**
