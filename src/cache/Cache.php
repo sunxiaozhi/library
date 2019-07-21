@@ -115,7 +115,7 @@ class Cache
         $cache = $this->makeCache($className);
 
         if (!($cache instanceof CacheAbstract)) {
-            throw new InvalidArgumentException(\sprintf('Cache "%s" must implement interface %s.', $name, Cache::class));
+            throw new InvalidArgumentException(\sprintf('Cache "%s" must extends abstract %s.', $name, Cache::class));
         }
 
         return $cache;
