@@ -55,6 +55,7 @@ class Redis extends Cache
         }
 
         $this->handler = new \Redis;
+
         if ($this->options['persistent']) {
             $this->handler->pconnect($this->options['host'], $this->options['port'], $this->options['timeout'], 'persistent_id_' . $this->options['select']);
         } else {
@@ -186,7 +187,7 @@ class Redis extends Cache
      *
      * @return boolean
      */
-    public function rm($name)
+    public function delete($name)
     {
         return $this->handler->delete($this->getCacheKey($name));
     }
@@ -200,7 +201,7 @@ class Redis extends Cache
      *
      * @return boolean
      */
-    public function clear($tag = null)
+    public function flush($tag = null)
     {
         if ($tag) {
             // 指定标签清除
@@ -208,9 +209,10 @@ class Redis extends Cache
             foreach ($keys as $key) {
                 $this->handler->delete($key);
             }
-            $this->rm('tag_' . md5($tag));
+            $this->delete('tag_' . md5($tag));
             return true;
         }
+
         return $this->handler->flushDB();
     }
 

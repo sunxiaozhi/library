@@ -1,6 +1,6 @@
 <?php
 /**
- * Cache
+ * CacheAbstract
  * User: sumxiaozhi
  * Date: 2019/7/21 17:15
  */
@@ -93,7 +93,7 @@ abstract class Cache
      *
      * @return boolean
      */
-    abstract public function rm($name);
+    abstract public function delete($name);
 
     /**
      * 清除缓存
@@ -104,7 +104,7 @@ abstract class Cache
      *
      * @return boolean
      */
-    abstract public function clear($tag = null);
+    abstract public function flush($tag = null);
 
     /**
      * 更新标签

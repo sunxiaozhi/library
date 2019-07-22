@@ -11,35 +11,43 @@ class FinancialCredit
 {
     /**
      * 根据借款方式计算对应期数的应还本金和利息
+     *
      * @param int $account 借款金额
      * @param double $year_apr 借款年利率
      * @param int $month_times 借款天数(目前只支持30的倍数)
      * @param string $borrow_style 还款方式
      * @param int $borrow_time 借款时间
      * @param string $type all=返回一次性还款数据,留空为返回还款每月还款详细数据
+     *
      * @return array|bool|string
-     * @throws Exception
+     *
+     * @throws \Exception
      */
-    public function EqualInterest($account, $year_apr, $month_times, $borrow_style, $borrow_time = 0, $type = '')
+    public function EqualInterest($account, $year_apr, $month_times, $borrowStyle, $borrow_time = 0, $type = '')
     {
+        //获取当前请求时间
         if (intval($borrow_time) == 0) {
-            $borrow_time = $_SERVER['REQUEST_TIME'];//获取当前请求时间
+            $borrow_time = $_SERVER['REQUEST_TIME'];
         }
-        if (intval($month_times) % 30 != 0) { //目前只支持30的倍数
+
+        //目前只支持30的倍数
+        if (intval($month_times) % 30 != 0) {
             return array();
         }
+
         // y：月 | x：利息 | b：本金 | e：到期
-        switch ($borrow_style) {
+        switch ($borrowStyle) {
             case 'yxb': // 按月等额本息
-                return self::EqualMonth($account, $year_apr, $month_times, $borrow_style, $borrow_time, $type);
+                return self::EqualMonth($account, $year_apr, $month_times, $borrowStyle, $borrow_time, $type);
             case 'yx_eb': // 按月付息到期还本
-                return self::EqualEndMonth($account, $year_apr, $month_times, $borrow_style, $borrow_time, $type);
+                return self::EqualEndMonth($account, $year_apr, $month_times, $borrowStyle, $borrow_time, $type);
             case 'ebx': // 到期还本付息
-                return self::EqualEnd($account, $year_apr, $month_times, $borrow_style, $borrow_time, $type);
+                return self::EqualEnd($account, $year_apr, $month_times, $borrowStyle, $borrow_time, $type);
             default:
                 return 'not_found';
         }
     }
+
     // 	等额本息法
     // 	贷款本金×月利率×（1+月利率）还款月数/[（1+月利率）还款月数-1]
     // 	a*[i*(1+i)^n]/[(1+I)^n-1]
@@ -88,12 +96,14 @@ class FinancialCredit
 
     /**
      * 按月付息到期还本
+     *
      * @param int $account 借款金额
      * @param double $year_apr 借款年利率
      * @param int $month_times 借款天数(目前只支持30的倍数)
      * @param int $borrow_style 还款方式
      * @param int $borrow_time 借款时间
      * @param string $type all=返回一次性还款数据,留空为返回还款每月还款详细数据
+     *
      * @return Array
      */
     private function EqualEndMonth($account, $year_apr, $month_times, $borrow_style, $borrow_time, $type)
@@ -176,7 +186,7 @@ class FinancialCredit
      * @param int $borrowStyle 融资还款方式 [yxb按月等额本息 | yx_eb按月付息到期还本 | ebx到期还本付息 | jx_eb按季付息到期还本]
      * @author xiebin
      */
-    function getRepamentTime($debitTime, $order, $borrowStyle)
+    public function getRepamentTime($debitTime, $order, $borrowStyle)
     {
         $repayment_time = 0;
         if ("yxb" == $borrowStyle || "yx_eb" == $borrowStyle) {
@@ -191,22 +201,30 @@ class FinancialCredit
 
     /**
      * 格式化时间并判断
+     *
      * @param int $time 时间戳
      * @param int $order 期数［取值范围1-12］
-     * @author xiebin
+     *
+     * @return false|int
      */
-    function formatTime($time, $order = 1)
+    public function formatTime($time, $order = 1)
     {
         //格式化时间并判断
         list($y, $m, $d, $h, $i, $s) = explode(' ', date('Y m d H i s', $time));
-        if ($d == 30 || $d == 31) { //如果是30号或者31号放款
+
+        //如果是30号或者31号放款
+        if ($d == 30 || $d == 31) {
             /**
              * @todo 解决还款计划2月跨年问题
              */
             $diff = intval(($m + $order) / 12);
+
             $month = ($m + $order) > 12 ? ($m + $order - $diff * 12) : $m + $order; //获取月份
-            if ($month == 2) { //如果是2月
+
+            //如果是2月
+            if ($month == 2) {
                 $day = date('t', mktime(0, 0, 0, 2, 1, $y + $diff)); //获取2月天数
+
                 $timestamp = mktime(23, 59, 59, 2, $day, $y + $diff);
             } else {
                 $timestamp = mktime(0, 0, 0, $m + $order, $d, $y) - 1;
@@ -214,6 +232,7 @@ class FinancialCredit
         } else {
             $timestamp = mktime(0, 0, 0, $m + $order, $d, $y) - 1;
         }
+
         return $timestamp;
     }
 }
