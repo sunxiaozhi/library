@@ -1,10 +1,8 @@
 <?php
 /**
  * 验证码的生成
- * Created by PhpStorm.
  * User: sunxiaozhi
- * Date: 2018/6/6
- * Time: 21:38
+ * Date: 2018/6/6 21:38
  */
 
 namespace sunxiaozhi\library\captcha;
