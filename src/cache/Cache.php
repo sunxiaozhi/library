@@ -44,9 +44,9 @@ class Cache
     }
 
     /**
-     * Cache instance
+     * Cache instance.
      *
-     * @return \sunxiaozhi\library\cache\Cache Cache
+     * @return \sunxiaozhi\library\cache\cache\Cache Cache
      *
      * @throws InvalidArgumentException
      */
@@ -70,11 +70,9 @@ class Cache
     }
 
     /**
-     * Get cache
+     * Get cache.
      *
-     * @param string $name
-     *
-     * @return Cache
+     * @return CacheAbstract
      *
      * @throws InvalidArgumentException
      */
@@ -102,7 +100,7 @@ class Cache
     }
 
     /**
-     * Create cache
+     * Create cache.
      *
      * @param $name
      * @return CacheAbstract Cache
@@ -122,7 +120,7 @@ class Cache
     }
 
     /**
-     * Formate cache class name
+     * Formate cache class name.
      *
      * @param $name
      *
@@ -143,7 +141,6 @@ class Cache
      * Make cache instance.
      *
      * @param string $cache
-     * @param array $config
      *
      * @return \sunxiaozhi\library\cache\cache\Cache
      *

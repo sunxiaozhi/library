@@ -11,8 +11,14 @@ use sunxiaozhi\library\cache\config\Config;
 
 class Redis extends Cache
 {
+    /**
+     * @var Config $config
+     */
     protected $config;
 
+    /**
+     * @var array
+     */
     protected $options = [
         'host' => '127.0.0.1',
         'port' => 6379,
@@ -24,8 +30,16 @@ class Redis extends Cache
         'prefix' => '',
     ];
 
+    /**
+     * @var \Redis
+     */
     protected $handler;
 
+    /**
+     * Constructor.
+     *
+     * @param Config $config
+     */
     public function __construct(Config $config)
     {
         $this->config = $config;
@@ -58,8 +72,11 @@ class Redis extends Cache
 
     /**
      * 判断缓存
+     *
      * @access public
+     *
      * @param string $name 缓存变量名
+     *
      * @return bool
      */
     public function has($name)
@@ -69,9 +86,12 @@ class Redis extends Cache
 
     /**
      * 读取缓存
+     *
      * @access public
+     *
      * @param string $name 缓存变量名
      * @param mixed $default 默认值
+     *
      * @return mixed
      */
     public function get($name, $default = false)
@@ -92,10 +112,13 @@ class Redis extends Cache
 
     /**
      * 写入缓存
+     *
      * @access public
+     *
      * @param string $name 缓存变量名
      * @param mixed $value 存储数据
      * @param integer|\DateTime $expire 有效时间（秒）
+     *
      * @return boolean
      */
     public function set($name, $value, $expire = null)
@@ -122,9 +145,12 @@ class Redis extends Cache
 
     /**
      * 自增缓存（针对数值缓存）
+     *
      * @access public
+     *
      * @param  string $name 缓存变量名
      * @param  int $step 步长
+     *
      * @return false|int
      */
     public function inc($name, $step = 1)
@@ -136,9 +162,12 @@ class Redis extends Cache
 
     /**
      * 自减缓存（针对数值缓存）
+     *
      * @access public
+     *
      * @param  string $name 缓存变量名
      * @param  int $step 步长
+     *
      * @return false|int
      */
     public function dec($name, $step = 1)
@@ -150,8 +179,11 @@ class Redis extends Cache
 
     /**
      * 删除缓存
+     *
      * @access public
+     *
      * @param string $name 缓存变量名
+     *
      * @return boolean
      */
     public function rm($name)
@@ -161,8 +193,11 @@ class Redis extends Cache
 
     /**
      * 清除缓存
+     *
      * @access public
+     *
      * @param string $tag 标签名
+     *
      * @return boolean
      */
     public function clear($tag = null)
