@@ -1,6 +1,6 @@
 <?php
 /**
- * Curl请求
+ * Curl
  * User: sunxiaozhi
  * Date: 2018/6/4 15:48
  */
@@ -10,6 +10,59 @@ namespace sunxiaozhi\library\curl;
 class Curl
 {
     /**
+     * POST请求
+     *
+     * @access public
+     *
+     * @param $url //地址
+     * @param string $fields //附带参数，可以是数组，也可以是字符串
+     * @param string $userAgent //浏览器UA
+     * @param string $httpHeaders //header头部，数组形式
+     * @param string $username //用户名
+     * @param string $password //密码
+     *
+     * @return boolean
+     */
+    public function post($url, $fields, $userAgent = '', $httpHeaders = '', $username = '', $password = '')
+    {
+        $return = $this->execute('POST', $url, $fields, $userAgent, $httpHeaders, $username, $password);
+
+        if (false === $return || is_array($return)) {
+            return false;
+        }
+
+        return $return;
+    }
+
+    /**
+     * GET请求
+     *
+     * @access public
+     *
+     * @param $url //地址
+     * @param string $userAgent //浏览器UA
+     * @param string $httpHeaders //header头部，数组形式
+     * @param string $username //用户名
+     * @param string $password //密码
+     *
+     * @return array|bool|mixed
+     */
+    public function get($url, $userAgent = '', $httpHeaders = '', $username = '', $password = '')
+    {
+        $return = $this->execute('GET', $url, "", $userAgent, $httpHeaders, $username, $password);
+
+        if (false === $return || is_array($return)) {
+            return false;
+        }
+
+        return $return;
+    }
+
+    /**
+     * Curl请求
+     *
+     * @access private
+     *
      * @param $method //请求方式
      * @param $url //地址
      * @param string $fields //附带参数，可以是数组，也可以是字符串
@@ -17,6 +70,7 @@ class Curl
      * @param string $httpHeaders //header头部，数组形式
      * @param string $username //用户名
      * @param string $password //密码
+     *
      * @return array|bool|mixed
      */
     private function execute($method, $url, $fields = '', $userAgent = '', $httpHeaders = '', $username = '', $password = '')
@@ -84,71 +138,25 @@ class Curl
             curl_setopt($curl_resource, CURLOPT_HTTPHEADER, $httpHeaders);
         }
 
-        $ret = curl_exec($curl_resource);
+        $return = curl_exec($curl_resource);
 
         if (curl_errno($curl_resource)) {
             curl_close($curl_resource);
             return array(curl_error($curl_resource), curl_errno($curl_resource));
         } else {
             curl_close($curl_resource);
-            if (!is_string($ret) || !strlen($ret)) {
+            if (!is_string($return) || !strlen($return)) {
                 return false;
             }
-            return $ret;
+            return $return;
         }
-    }
-
-    /**
-     * 发送POST请求
-     * @param $url //地址
-     * @param string $fields //附带参数，可以是数组，也可以是字符串
-     * @param string $userAgent //浏览器UA
-     * @param string $httpHeaders //header头部，数组形式
-     * @param string $username //用户名
-     * @param string $password //密码
-     * @return boolean
-     */
-    public function post($url, $fields, $userAgent = '', $httpHeaders = '', $username = '', $password = '')
-    {
-        $ret = $this->execute('POST', $url, $fields, $userAgent, $httpHeaders, $username, $password);
-
-        if (false === $ret) {
-            return false;
-        }
-
-        if (is_array($ret)) {
-            return false;
-        }
-
-        return $ret;
-    }
-
-    /**
-     * 发送GET请求
-     * @param $url //地址
-     * @param string $userAgent //浏览器UA
-     * @param string $httpHeaders //header头部，数组形式
-     * @param string $username //用户名
-     * @param string $password //密码
-     * @return array|bool|mixed
-     */
-    public function get($url, $userAgent = '', $httpHeaders = '', $username = '', $password = '')
-    {
-        $ret = $this->execute('GET', $url, "", $userAgent, $httpHeaders, $username, $password);
-
-        if (false === $ret) {
-            return false;
-        }
-
-        if (is_array($ret)) {
-            return false;
-        }
-
-        return $ret;
     }
 
     /**
      * curl支持 检测
+     *
+     * @access private
+     *
      * @return bool|null|resource
      */
     private function create()

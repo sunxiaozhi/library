@@ -1,6 +1,6 @@
 <?php
 /**
- *
+ * Cache
  * User: sumxiaozhi
  * Date: 2019/7/21 17:15
  */
@@ -9,16 +9,26 @@ namespace sunxiaozhi\library\cache\cache;
 
 abstract class Cache
 {
+    /**
+     * @var mixed
+     */
     protected $handler;
 
+    /**
+     * @var array
+     */
     protected $options = [];
 
+    /**
+     * @var string
+     */
     protected $tag;
 
     /**
      * 判断缓存是否存在
      *
      * @access public
+     *
      * @param string $name 缓存变量名
      *
      * @return bool
@@ -29,6 +39,7 @@ abstract class Cache
      * 读取缓存
      *
      * @access public
+     *
      * @param string $name 缓存变量名
      * @param mixed  $default 默认值
      *

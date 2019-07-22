@@ -1,14 +1,11 @@
 <?php
 /**
- * Created by PhpStorm.
- * 金融P2P融资贷款相关算法类
+ * 金融P2P融资贷款相关算法类（摘录）
  * User: sunhuanzhi
- * Date: 2018/6/6
- * Time: 10:33
+ * Date: 2018/6/6 10:33
  */
 
 namespace sunxiaozhi\library;
-
 
 class FinancialCredit
 {

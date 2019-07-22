@@ -1,6 +1,6 @@
 <?php
 /**
- * Redis缓存类
+ * Redis
  * User: sunxiaozhi
  * Date: 2019/7/21 8:33
  */
