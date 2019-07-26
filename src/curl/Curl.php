@@ -7,6 +7,28 @@
 
 namespace sunxiaozhi\library\curl;
 
+
+/**
+ * Class Curl
+ * @package sunxiaozhi\library\curl
+ *
+ * for example: raw
+ * $data = [
+ *   'nonceStr' => 'fycVDcng',
+ *   'appKey' => '760e86c6a193439a9d034f7bc55a47ff',
+ * ];
+ * $curlHelpers = new CurlHelpers();
+ * $curlHelpers->post($url, json_encode($data), '', ['X-AjaxPro-Method:ShowList', 'Content-Type: application/json; charset=utf-8', 'Content-Length: ' . strlen(json_encode($data))]);
+ *
+ *  * for example: array
+ * $data = [
+ *   'nonceStr' => 'fycVDcng',
+ *   'appKey' => '760e86c6a193439a9d034f7bc55a47ff',
+ * ];
+ * $curlHelpers = new CurlHelpers();
+ * $curlHelpers->post($url, json_encode($data));
+ */
+
 class Curl
 {
     /**
